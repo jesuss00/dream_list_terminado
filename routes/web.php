@@ -1,15 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DeseosController;
+use App\Http\Controllers\DeseoController;
 
-Route::get('/', function () {
-    return view('welcome'); // Asegúrate de que la vista 'welcome' existe en resources/views/
-});
-
-
-Route::post('/deseos', [DeseosController::class, 'store'])->name('deseos.store');
-
-Route::get('/', [DeseosController::class, 'index']);
+Route::get('/', [DeseoController::class, 'index'])->name('deseo.index');
+Route::post('/deseos', [DeseoController::class, 'store'])->name('deseo.store');
 
 

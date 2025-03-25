@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deseos;
+use App\Models\Deseo;
 use Illuminate\Http\Request;
 
-class DeseosController extends Controller
+class DeseoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
 {
-    $deseos = Deseos::all(); // Obtiene todos los deseos
+    $deseos = Deseo::all(); // Obtiene todos los deseos
     return view('welcome', compact('deseos'));
 }
 
@@ -38,7 +38,7 @@ class DeseosController extends Controller
     ]);
 
     // Crear un nuevo deseo con los datos del formulario
-    $deseo = Deseos::create([
+    $deseo = Deseo::create([
         'usuario_id' => $request->usuario_id,
         'nombre' => $request->nombre,
         'categoria_id' => $request->categoria_id,
@@ -52,7 +52,7 @@ class DeseosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Deseos $deseos)
+    public function show(Deseo $deseos)
     {
         //
     }
@@ -60,7 +60,7 @@ class DeseosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Deseos $deseos)
+    public function edit(Deseo $deseos)
     {
         //
     }
@@ -68,7 +68,7 @@ class DeseosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Deseos $deseos)
+    public function update(Request $request, Deseo $deseos)
     {
         //
     }
@@ -76,7 +76,7 @@ class DeseosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Deseos $deseos)
+    public function destroy(Deseo $deseos)
     {
         //
     }
