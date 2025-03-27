@@ -67,9 +67,10 @@
                                 <input type="text" name="nombre" id="nombre" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label for="categoria_id" class="form-label">Categoría</label>
-                                <input type="text" name="categoria_id" id="categoria_id" class="form-control">
+                                <label for="categoria" class="form-label">Categoría</label>
+                                <input type="text" name="categoria" id="categoria" class="form-control">
                             </div>
+
                             <div class="mb-3">
                                 <label for="estado_id" class="form-label">Estado</label>
                                 <select name="estado_id" id="estado_id" class="form-control" required>
@@ -89,7 +90,7 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
                 <span>{{ $deseo->nombre }}</span>
                 <div>
-                <a href="{{ route('deseo.edit', $deseo->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                {{-- <a href="{{ route('deseo.edit', $deseo->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
                 <form action="{{ route('deseo.destroy', $deseo->id) }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')

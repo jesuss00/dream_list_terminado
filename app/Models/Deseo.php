@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Usuario;
+use App\Models\Categoria;
+use App\Models\Estado;
 
 class Deseo extends Model
 {
