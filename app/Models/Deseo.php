@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Usuario;
-use App\Models\Categoria;
-use App\Models\Estado;
+use App\Models\Usuarios;
+use App\Models\Categorias;
+use App\Models\Estados;
 
 class Deseo extends Model
 {
@@ -24,18 +24,18 @@ class Deseo extends Model
     // Relación: Un deseo pertenece a un usuario
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Usuarios::class, 'usuario_id');
     }
 
     // Relación: Un deseo puede tener una categoría (opcional)
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'categoria_id');
+        return $this->belongsTo(Categorias::class, 'categoria_id');
     }
 
     // Relación: Un deseo tiene un estado (Pendiente o Realizado)
     public function estado()
     {
-        return $this->belongsTo(Estado::class, 'estado_id');
+        return $this->belongsTo(Estados::class, 'estado_id');
     }
 }

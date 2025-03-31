@@ -10,4 +10,5 @@ Route::get('/deseo/{deseo}/edit', function() {
     return "Página de edición en construcción.";
 })->name('deseo.edit');
 
+Route::put('/deseos/{id}/actualizar-estado', [DeseoController::class, 'actualizarEstado']);
 

@@ -14,9 +14,11 @@ class DeseoController extends Controller
      */
     public function index()
     {
-        $deseos = Deseo::all(); // Obtiene todos los deseos
-        return view('welcome', compact('deseos'));
+        $deseos = Deseo::all(); // Carga la relación con Categorias
+        $estados = \App\Models\Estados::all(); // Cargar todos los estados disponibles
+        return view('welcome', compact('deseos', 'estados'));
     }
+    
 
 
 
@@ -65,11 +67,12 @@ class DeseoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Deseo $deseos)
+    public function show($id)
     {
-        //
-    }
 
+    }
+        
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -85,6 +88,21 @@ class DeseoController extends Controller
     {
         //
     }
+   public function actualizarEstado(Request $request, $id)
+   {
+       $deseo = Deseo::findOrFail($id); // Busca el deseo por ID
+   
+       // Validar que el estado existe en la tabla estados
+       if (\App\Models\Estados::where('id', $request->estado_id)->exists()) {
+           $deseo->estado_id = $request->estado_id; // Asigna el ID del estado
+           $deseo->save();
+   
+           return response()->json(['mensaje' => 'Estado actualizado correctamente']);
+       }
+   
+       return response()->json(['error' => 'Estado no válido'], 400);
+   }
+   
 
     /**
      * Remove the specified resource from storage.

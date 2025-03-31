@@ -85,29 +85,90 @@
                 <div class="mt-4">
                     <h2 class="text-center">Lista de deseos</h2>
                     <ul class="list-group">
-                    @if(isset($deseos) && $deseos->count() > 0)
-                @foreach ($deseos as $deseo)
-                <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
-                <span>{{ $deseo->nombre }}</span>
-                <div>
-                {{-- <a href="{{ route('deseo.edit', $deseo->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
-                <form action="{{ route('deseo.destroy', $deseo->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                </form>
-                </div>
-                </li>
-                 @endforeach
+                    @if(session('success'))
+    <div id="alerta" class="alert alert-success text-center position-fixed top-0 start-50 translate-middle-x mt-3 w-50" role="alert">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(isset($deseos) && $deseos->count() > 0)
+    @foreach ($deseos as $deseo)
+        <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white">
+            <span>{{ $deseo->nombre }}</span>
+
+            <!-- Select para cambiar estado -->
+            <div class="d-flex align-items-center gap-2">
+        <select class="form-select form-select-sm cambiar-estado" data-id="{{ $deseo->id }}" style="width: auto;">
+            @foreach($estados as $estado)
+                <option value="{{ $estado->id }}" {{ $deseo->estado_id == $estado->id ? 'selected' : '' }}>
+                    {{ $estado->nombre }}
+                </option>
+            @endforeach
+        </select>
+
+        <!-- Botón Ver -->
+        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#modalDeseo{{ $deseo->id }}">
+            Ver
+        </button>
+
+        <!-- Botón Eliminar -->
+        <form action="{{ route('deseo.destroy', $deseo->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+        </form>
+    </div>
+</li>
+    @endforeach
 @else
     <p class="text-center">No hay deseos disponibles.</p>
 @endif
+
+
 
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let alerta = document.getElementById("alerta");
+        if (alerta) {
+            setTimeout(() => {
+                alerta.style.transition = "opacity 0.5s ease";
+                alerta.style.opacity = "0";
+                setTimeout(() => alerta.remove(), 500);
+            }, 2000);
+        }
+    });
+    </script>
+
+    <script>
+    $(document).on('change', '.cambiar-estado', function() {
+    var id = $(this).data('id');
+    var nuevoEstado = $(this).val();
+
+    $.ajax({
+    url: '/deseos/' + id + '/actualizar-estado',
+    type: 'PUT',
+    data: {
+        estado_id: nuevoEstado,
+        _token: '{{ csrf_token() }}'
+    },
+
+        success: function(response) {
+            alert('Estado actualizado correctamente.');
+        },
+        error: function(xhr) {
+            alert('Error al actualizar el estado.');
+        }
+    });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
